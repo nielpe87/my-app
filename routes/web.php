@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,5 +19,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('products', ProductController::class);
+Route::get('login', [AuthController::class, 'formLogin'])->name('login');
+Route::get('logout', [AuthController::class, 'logout'])->name('logout');
+Route::post('logon', [AuthController::class, 'logon'])->name('logon');
+
+
+Route::group(['middleware' => 'auth'], function(){
+    Route::resource('products', ProductController::class);
+    Route::get('products/{product}',[ProductController::class, 'destroy'])->name('products.delete');
+    Route::post('products/{product}',[ProductController::class, 'update'])->name('products.atualizar');
+});
+
 

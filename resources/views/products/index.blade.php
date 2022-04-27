@@ -1,33 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Produtos</h1>
+@extends('layouts.app')
 
-    <table>
-        <thead>
+@section('conteudo')
+<h1>Produtos</h1>
+<a href="{{ route('logout') }}">Sair</a> -
+<a href="{{ route('products.create') }}" class="btn btn-success">Adicionar</a>
 
-            <tr>
-                <th>Id</th>
-                <th>Nome</th>
-                <th>Price</th>
+<table class="table table-hover">
+    <thead>
 
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($products as $product )
-               <tr>
-                   <td>{{ $product->id }}</td>
-                   <td>{{ $product->name }}</td>
-                   <td>{{ $product->price }}</td>
-               </tr>
-            @endforeach
-        </tbody>
-    </table>
-</body>
-</html>
+        <tr>
+            <th>Id</th>
+            <th>Nome</th>
+            <th>Price</th>
+            <th>Opções</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach ($products as $product )
+           <tr>
+               <td>{{ $product->id }}</td>
+               <td>{{ $product->name }}</td>
+               <td>{{ $product->price }}</td>
+               <td>
+                   <a href="{{ route('products.edit', $product->id) }}" class="btn btn-primary">Editar</a>
+                   <a href="{{ route('products.delete', $product->id) }}" class="btn btn-danger">Remover</a>
+               </td>
+           </tr>
+        @endforeach
+    </tbody>
+</table>
+@endsection
+
+
+
+
