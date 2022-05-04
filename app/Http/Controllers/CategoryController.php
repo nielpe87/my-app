@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
-use App\Models\Product;
 use Illuminate\Http\Request;
 
-class ProductController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +14,10 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
 
-        return view('products.index', ['products' => $products]);
+        $categories = Category::all();
+
+        return view('categories.index', ['categories' => $categories]);
     }
 
     /**
@@ -27,9 +27,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-
-        $categories = Category::all();
-        return view('products.create', ['categories' => $categories]);
+        return view('categories.create');
     }
 
     /**
@@ -40,14 +38,12 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-       $product = new Product;
+       $category = new Category;
 
-       $product->name = $request->name;
-       $product->price = $request->price;
-       $product->category_id = $request->category_id;
-       $product->save();
+       $category->name = $request->name;
+       $category->save();
 
-       return redirect()->route('products.index');
+       return redirect()->route('categories.index');
 
     }
 
@@ -70,11 +66,9 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-       $product = Product::find($id);
+       $category = Category::find($id);
 
-       $categories = Category::all();
-
-       return view('products.edit', ['product' => $product, 'categories' => $categories]);
+       return view('categories.edit', ['category' => $category]);
     }
 
     /**
@@ -86,14 +80,12 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $product = Product::find($id);
+        $category = Category::find($id);
 
-        $product->name = $request->name;
-        $product->price = $request->price;
-        $product->category_id = $request->category_id;
-        $product->save();
+        $category->name = $request->name;
+        $category->save();
 
-        return redirect()->route('products.index');
+        return redirect()->route('categories.index');
     }
 
     /**
@@ -104,11 +96,11 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        $product = Product::find($id);
+        $category = Category::find($id);
 
-        $product->delete();
+        $category->delete();
 
-        return redirect()->route('products.index');
+        return redirect()->route('categories.index');
 
     }
 }
